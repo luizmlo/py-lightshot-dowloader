@@ -7,12 +7,13 @@ from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 import random, string, requests, os
 
-dirname = "Output"
+# - Output folder name.
+DIRNAME = "Output"
 
 
 # - Generates lightshot link using generateId() function
-def generateLink(nomeImg):
-    return "https://prnt.sc/" + nomeImg
+def generateLink(fileName):
+    return "https://prnt.sc/" + fileName
 
 
 # - Generates random string
@@ -20,33 +21,33 @@ def generateId(size):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(size))
 
 
-# - Downloads HTML file from link previously generated
-def generateHtml(nomeImg):
-    url = generateLink(nomeImg)
+# - Downloads HTML File from link previously generated
+def generateHtml(fileName):
+    url = generateLink(fileName)
     page = requests.get(url)
     return page
 
 
-# - Looks for raw image link in HTML file
-def generateImgur(url, nomeImg):
-    soup = BeautifulSoup(generateHtml(nomeImg).content, 'html.parser')
+# - Looks for raw image link in HTML File
+def generateImgur(url, fileName):
+    soup = BeautifulSoup(generateHtml(fileName).content, 'html.parser')
     imgUrl = soup.find('img', id='screenshot-image')['src']
 
     # - Prevents "Error Image" From being downloaded
     if imgUrl != "//st.prntscr.com/2017/07/03/0920/img/0_173a7b_211be8ff.png":
-        pathArquivo = dirname + "/" + nomeImg + ".png"
+        pathArquivo = DIRNAME + "/" + fileName + ".png"
         urlretrieve(imgUrl, pathArquivo)
-        print("New File Downloaded to Output")
+        print("File: " + fileName + " - Saved to " + DIRNAME + " folder.")
 
     else:
-        print("Url not found.")
+        print("The requested url is invalid. Trying a new combination...")
 
 
 # - Creates "Output" folder if not present
-if not os.path.exists(dirname):
-    os.makedirs(dirname)
+if not os.path.exists(DIRNAME):
+    os.makedirs(DIRNAME)
 
 while True:
-    nomeImg = generateId(5)
-    url = generateLink(nomeImg)
-    generateImgur(url, nomeImg)
+    fileName = generateId(5)
+    url = generateLink(fileName)
+    generateImgur(url, fileName)
