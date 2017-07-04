@@ -9,7 +9,8 @@ import random, string, requests, os
 
 # - Output folder name.
 DIRNAME = "Output"
-
+DLCOUNT = 0
+ERCOUNT = 0
 
 # - Generates lightshot link using generateId() function
 def generateLink(fileName):
@@ -35,12 +36,17 @@ def generateImgur(url, fileName):
 
     # - Prevents "Error Image" From being downloaded
     if imgUrl != "//st.prntscr.com/2017/07/03/0920/img/0_173a7b_211be8ff.png":
+        global DLCOUNT
+        DLCOUNT += 1
         pathArquivo = DIRNAME + "/" + fileName + ".png"
         urlretrieve(imgUrl, pathArquivo)
-        print("File: " + fileName + " - Saved to " + DIRNAME + " folder.")
+        print("File: " + fileName + " - Saved to " + DIRNAME + " folder.  ")
+        print("Total Downloads: " + str(DLCOUNT))
 
     else:
-        print("The requested url is invalid. Trying a new combination...")
+        global ERCOUNT
+        ERCOUNT += 1
+        print("The requested url is invalid. Trying a new combination... Error n. " + str(ERCOUNT))
 
 
 # - Creates "Output" folder if not present
