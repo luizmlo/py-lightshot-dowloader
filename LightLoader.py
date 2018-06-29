@@ -11,6 +11,7 @@ import random, string, requests, os
 DIRNAME = "Output"
 DLCOUNT = 0
 ERCOUNT = 0
+LENGTH = 6
 
 # - Generates lightshot link using generateId() function
 def generateLink(fileName):
@@ -35,7 +36,7 @@ def generateImgur(url, fileName):
     imgUrl = soup.find('img', id='screenshot-image')['src']
 
     # - Prevents "Error Image" From being downloaded
-    if imgUrl != "//st.prntscr.com/2017/07/03/0920/img/0_173a7b_211be8ff.png":
+    if imgUrl != "st.prntscr.com/2017/07/03/0920/img/0_173a7b_211be8ff.png":
         global DLCOUNT
         DLCOUNT += 1
         pathArquivo = DIRNAME + "/" + fileName + ".png"
@@ -54,6 +55,6 @@ if not os.path.exists(DIRNAME):
     os.makedirs(DIRNAME)
 
 while True:
-    fileName = generateId(5)
+    fileName = generateId(LENGTH)
     url = generateLink(fileName)
     generateImgur(url, fileName)
