@@ -9,7 +9,7 @@ DLCOUNT = 0
 ERCOUNT = 0
 LENGTH = 6
 
-class LighLoader(threading.Thread):
+class LightLoader(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -51,8 +51,8 @@ class LighLoader(threading.Thread):
         if imgUrl != '//st.prntscr.com/2018/06/19/0614/img/0_173a7b_211be8ff.png':
             global DLCOUNT
             DLCOUNT += 1
-            pathArquivo = DIRNAME + "/" + fileName + ".png"
-            urlretrieve(imgUrl, pathArquivo)
+            archive_path = DIRNAME + "/" + fileName + ".png"
+            urlretrieve(imgUrl, archive_path)
             print("File: " + fileName + " - Saved to " + DIRNAME + " folder.  ")
             print("Total Downloads: " + str(DLCOUNT))
 
@@ -67,11 +67,11 @@ def main():
     if not os.path.exists(DIRNAME):
         os.makedirs(DIRNAME)
 
-    for i in range(int(input("coloque aqui o número de threads: "))):
-        thread = LighLoader()
+    for _ in range(int(input("Input number of threads to be used: "))):
+        thread = LightLoader()
         thread.start()
 
-        print("Ativadas: {}".format(threading.activeCount() - 1))
+        print("Active threads: {}".format(threading.activeCount() - 1))
 
 
 main()
