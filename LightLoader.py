@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-####***THIS SCRIPT USES PYTHON 3.7***####
-
 from urllib.request import urlretrieve, urlopen, Request
 from bs4 import BeautifulSoup
 import random, string, os
