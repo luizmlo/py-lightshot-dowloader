@@ -2,6 +2,7 @@ from urllib.request import urlretrieve, urlopen, Request
 from bs4 import BeautifulSoup
 import random, string, os
 import threading
+import time
 
 # - Output folder name.
 DIRNAME = "Output"
@@ -70,6 +71,7 @@ def main():
     for _ in range(int(input("Input number of threads to be used: "))):
         thread = LightLoader()
         thread.start()
+        time.sleep(0.25)
 
         print("Active threads: {}".format(threading.activeCount() - 1))
 
